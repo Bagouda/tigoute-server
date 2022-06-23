@@ -56,17 +56,20 @@ app.use(
     }
   })
 );
+
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", '*' ); // update to match the domain you will make the request from
   //to allow cross domain requests to send cookie information.
   res.header("Access-Control-Allow-Credentials", true);
-  // list of methods that are supported by the server
-  res.header("Access-Control-Allow-Methods", "OPTIONS,GET,PUT,POST,DELETE");
+ 
+  if (request.method === 'OPTIONS') {
+	// On liste des méthodes et les entêtes valides
+	response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Origin, Authorization');
+	response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
 
-  res.header(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, X-XSRF-TOKEN"
-  );
+	return response.end();
+  }
 
   next();
 });
