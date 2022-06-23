@@ -47,20 +47,29 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.on('request', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-    if (req.method === 'OPTIONS') {
-
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Origin, Authorization');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-
-        return res.end();
+// cors
+const cors = require("cors");
+app.use(
+  require("cors")({
+    origin: function(origin, callback) {
+      callback(null, origin);
     }
+  })
+);
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", req.headers.origin); // update to match the domain you will make the request from
+  //to allow cross domain requests to send cookie information.
+  res.header("Access-Control-Allow-Credentials", true);
+  // list of methods that are supported by the server
+  res.header("Access-Control-Allow-Methods", "OPTIONS,GET,PUT,POST,DELETE");
 
+  res.header(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, X-XSRF-TOKEN"
+  );
+
+  next();
 });
-
-
 
 module.exports = app;
 
