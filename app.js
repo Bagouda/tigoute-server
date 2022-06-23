@@ -46,6 +46,22 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(2000);
+
+app.on('request', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    if (req.method === 'OPTIONS') {
+
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Origin, Authorization');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+
+        return res.end();
+    }
+
+});
+
+
 
 module.exports = app;
+
+app.listen(2000);
