@@ -57,7 +57,7 @@ app.use(
   })
 );
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", req.headers.origin); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", '*' ); // update to match the domain you will make the request from
   //to allow cross domain requests to send cookie information.
   res.header("Access-Control-Allow-Credentials", true);
   // list of methods that are supported by the server
