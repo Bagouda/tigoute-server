@@ -11,6 +11,25 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+
+// cors
+const cors = require("cors");
+app.use(
+  require("cors")({
+    origin: function(origin, callback) {
+      callback(null, origin);
+    }
+  })
+);
+
+
+app.use((req, res, next) => {      // modify CORS rules
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+    next();
+});
+
 app.use(session({
    secret : 'Tigoute',
    resave : true,
@@ -44,25 +63,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-
-// cors
-const cors = require("cors");
-app.use(
-  require("cors")({
-    origin: function(origin, callback) {
-      callback(null, origin);
-    }
-  })
-);
-
-
-app.use((req, res, next) => {      // modify CORS rules
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-    next();
 });
 
 module.exports = app;
