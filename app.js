@@ -58,22 +58,13 @@ app.use(
 );
 
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", '*' ); // update to match the domain you will make the request from
-  //to allow cross domain requests to send cookie information.
-  res.header("Access-Control-Allow-Credentials", true);
- 
-  if (request.method === 'OPTIONS') {
-	// On liste des méthodes et les entêtes valides
-	response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Origin, Authorization');
-	response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-
-	return response.end();
-  }
-
-  next();
+app.use((req, res, next) => {      // modify CORS rules
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+    next();
 });
 
 module.exports = app;
 
-app.listen(2000);
+app.listen(8081);

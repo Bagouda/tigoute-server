@@ -5,11 +5,12 @@ var database = require('../main');
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', session : req.session });
+router.get('/api', function(req, res, next) {
+ 	res.send("Home");
+	res.end();
 });
 
-router.post('/login', function(req, res, next){
+router.post('/api/login', function(req, res, next){
 	res.send('Test')
     res.end();
 })
