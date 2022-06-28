@@ -42,7 +42,7 @@ router.post('/login', function(req, res, next){
     
 });
 
-router.post('/register', function (err, result){
+router.post('/register', function (req, res, next){
 	query = "Select t.type_nom from type_ingredient t"
 
 	con.query(query, function (err, result) {
@@ -52,10 +52,15 @@ router.post('/register', function (err, result){
 	  });
 });
 
-router.get('/get_recette', function(err, result){
-	query = "select * from recette"
+router.get('/get_recette', function(req, res, next){
+	query = "SELECT * FROM recette"
 	
-	res.send(req)
+	con.query(query, function (err, result) {
+		if (err) throw err;
+		console.log(result)
+		res.send(result);
+		 
+	  });
 
 });
 
