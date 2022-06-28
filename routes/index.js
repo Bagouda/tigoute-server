@@ -17,7 +17,7 @@ var con = mysql.createConnection({
 	 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
 	
 
 	con.query(query, function (err, result) {
@@ -35,6 +35,7 @@ router.post('/login', function(req, res, next){
 
 	con.query(query, function (err, result) {
 		if (err) throw err;
+		console.log(result)
 		res.send(result);
 		 
 	  });
@@ -51,14 +52,11 @@ router.post('/register', function (err, result){
 	  });
 });
 
-router.post('/get_recette:id', function(err, result){
+router.get('/get_recette:id', function(err, result){
 	query = ""
 	
-	con.query(query, function(err, result){
-		if (err) throw err;
-		res.send(result);
-		
-	});
+	res.send(req)
+
 });
 
 module.exports = router;
