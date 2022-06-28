@@ -5,19 +5,27 @@ var router = express.Router();
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-    host: "sql11.freesqldatabase.com",
-    user: "sql11501090",
-    password: "8ZZez17pGn",
-    database: "sql11501090",
+    host: "remotemysql.com",
+    user: "kvf8N8mwnP",
+    password: "0hCp9VJt1D",
+    database: "kvf8N8mwnP",
     port: "3306"
 });
 
 
 
-
+	 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+	
+
+	con.query(query, function (err, result) {
+		if (err) throw err;
+		console.log(result);
+		 
+	  });
+	
  	res.send("Home");
 	res.end();
 });
