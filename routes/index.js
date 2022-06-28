@@ -52,8 +52,8 @@ router.post('/register', function (err, result){
 	  });
 });
 
-router.get('/get_recette:id', function(err, result){
-	query = ""
+router.get('/get_recette, function(err, result){
+	query = "select * from recette"
 	
 	res.send(req)
 
