@@ -31,29 +31,50 @@ router.post('/', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next){
-	query = "Select t.type_nom from type_ingredient t"
+	query = "SELECT * FROM utilisateur WHERE mot_de_passe = ? and courriel_utilisateur = ? ";
 
-	con.query(query, function (err, result) {
+	con.query(query,[req.body.mot_de_passe, req.body.courriel_utilisateur], function (err, result) {
 		if (err) throw err;
-		console.log(result)
-		res.send(result);
+		console.log(req.body)
+		if(result.length == 1){
+			res.send(true);
+		}
+		else{
+			res.send(false);
+		}
+		
 		 
 	  });
     
 });
 
 router.post('/register', function (req, res, next){
-	query = "Select t.type_nom from type_ingredient t"
-
+	//d'abord on regarde le nombre d'utilisateur
+	
+	
+	query = "SELECT * FROM utilisateur";
 	con.query(query, function (err, result) {
 		if (err) throw err;
-		res.send(result);
+		console.log(err)
+		number_user = result.length + 1;
+			query = "INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?)"
+				user_data = [number_user, req.body.prenom_utilisateur, req.body.nom_utilisateur, req.body.courriel_utilisateur, req.body.mot_de_passe]
+				con.query(query,user_data, function (err, result) {
+				if (err) throw err;
+				console.log(err);
+				res.send(number_user);
+			 
+		  });
 		 
 	  });
+	  
+	  
+	
+	
 });
 
 router.get('/get_recette', function(req, res, next){
-	query = "SELECT * FROM recette"
+	query = "select * from recette"
 	
 	con.query(query, function (err, result) {
 		if (err) throw err;
