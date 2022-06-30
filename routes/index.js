@@ -50,31 +50,69 @@ router.post('/login', function(req, res, next){
 
 router.post('/register', function (req, res, next){
 	//d'abord on regarde le nombre d'utilisateur
-	
-	
 	query = "SELECT * FROM utilisateur";
 	con.query(query, function (err, result) {
 		if (err) throw err;
 		console.log(err)
 		number_user = result.length + 1;
-			query = "INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?)"
-				user_data = [number_user, req.body.prenom_utilisateur, req.body.nom_utilisateur, req.body.courriel_utilisateur, req.body.mot_de_passe]
-				con.query(query,user_data, function (err, result) {
+		
+			// ensuite on regarde si l'adresse mail est deja utilisée
+			query = 'Select * from utilisateur where courriel_utilisateur = ? ';
+			con.query(query,req.body.courriel_utilisateur, function (err, result) {
 				if (err) throw err;
 				console.log(err);
-				res.send(number_user);
+				
+				// si un utilisateur à deja la meme adresse on retourne false
+				if( result.length > 1)
+				{
+				res.send(false);
+				}
+				else
+				{
+			
+						// ensuite on ajoute l'utilisateur
+					query = "INSERT INTO utilisateur VALUES (?, ?, ?, ?, ?)"
+						user_data = [number_user, req.body.prenom_utilisateur, req.body.nom_utilisateur, req.body.courriel_utilisateur, req.body.mot_de_passe]
+						con.query(query,user_data, function (err, result) {
+						if (err) throw err;
+						console.log(err);
+						res.send(number_user);
+					 
+				  });
+				}
 			 
-		  });
-		 
+			});
+		  
 	  });
 	  
-	  
-	
-	
 });
 
 router.get('/get_recette', function(req, res, next){
 	query = "select * from recette"
+	
+	con.query(query, function (err, result) {
+		if (err) throw err;
+		console.log(result)
+		res.send(result);
+		 
+	  });
+
+});
+
+router.get('/get_perdre', function(req, res, next){
+	query = "select * from recette where id_calories == 1"
+	
+	con.query(query, function (err, result) {
+		if (err) throw err;
+		console.log(result)
+		res.send(result);
+		 
+	  });
+
+});
+
+router.get('/get_gagner', function(req, res, next){
+	query = "select * from recette where id_calories > 1"
 	
 	con.query(query, function (err, result) {
 		if (err) throw err;
