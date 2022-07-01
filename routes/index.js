@@ -102,8 +102,8 @@ router.get('/get_recette', function(req, res, next){
 });
 
 router.get('/get_perdre', function(req, res, next){
-	query = "select * from recette where id_calories == 1"
 	res.header("Access-Control-Allow-Origin", "*");
+	query = "select * from recette where id_calories = 1";
 	con.query(query, function (err, result) {
 		if (err) throw err;
 		console.log(result)
