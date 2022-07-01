@@ -19,7 +19,7 @@ var con = mysql.createConnection({
 /* GET home page. */
 router.post('/', function(req, res, next) {
 	
-
+	res.header("Access-Control-Allow-Origin", "*");
 	con.query(query, function (err, result) {
 		if (err) throw err;
 		console.log(result);
@@ -33,6 +33,7 @@ router.post('/', function(req, res, next) {
 router.post('/login', function(req, res, next){
 	query = "SELECT * FROM utilisateur WHERE mot_de_passe = ? and courriel_utilisateur = ? ";
 
+	res.header("Access-Control-Allow-Origin", "*");
 	con.query(query,[req.body.mot_de_passe, req.body.courriel_utilisateur], function (err, result) {
 		if (err) throw err;
 		console.log(req.body)
@@ -51,6 +52,7 @@ router.post('/login', function(req, res, next){
 router.post('/register', function (req, res, next){
 	//d'abord on regarde le nombre d'utilisateur
 	query = "SELECT * FROM utilisateur";
+	res.header("Access-Control-Allow-Origin", "*");
 	con.query(query, function (err, result) {
 		if (err) throw err;
 		console.log(err)
@@ -89,7 +91,7 @@ router.post('/register', function (req, res, next){
 
 router.get('/get_recette', function(req, res, next){
 	query = "select * from recette"
-	
+	res.header("Access-Control-Allow-Origin", "*");
 	con.query(query, function (err, result) {
 		if (err) throw err;
 		console.log(result)
@@ -101,7 +103,7 @@ router.get('/get_recette', function(req, res, next){
 
 router.get('/get_perdre', function(req, res, next){
 	query = "select * from recette where id_calories == 1"
-	
+	res.header("Access-Control-Allow-Origin", "*");
 	con.query(query, function (err, result) {
 		if (err) throw err;
 		console.log(result)
@@ -113,7 +115,7 @@ router.get('/get_perdre', function(req, res, next){
 
 router.get('/get_gagner', function(req, res, next){
 	query = "select * from recette where id_calories > 1"
-	
+	res.header("Access-Control-Allow-Origin", "*");
 	con.query(query, function (err, result) {
 		if (err) throw err;
 		console.log(result)
